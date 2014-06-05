@@ -1,0 +1,7 @@
+defscrollback 32000
+startup_message off
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]%{w} %l'
+termcapinfo xterm ti@:te@
+altscreen on
+bind '/' eval "clear" "scrollback 0" "scrollback 32000"
