@@ -22,6 +22,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'powerline/powerline'
   Plug 'ervandew/supertab'
   Plug 'bronson/vim-trailing-whitespace'
+  Plug 'kshenoy/vim-signature'
+  Plug 'rking/ag.vim'
 
   " JSON
   Plug 'elzr/vim-json'
