@@ -3,46 +3,46 @@
 " Last updated: 12/Dec/2008
 "
 " Settings {{{
-set secure nocompatible
-if version >= 600
-  syntax enable
+call plug#begin('~/.vim/plugged')
+  " C related
+  Plug 'vim-scripts/c.vim'
 
-  if version >= 700
-    set nocompatible
-    filetype off
+  "Plug 'mib_translator'
+  Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+  Plug 'majutsushi/tagbar'
+  Plug 'ctrlpvim/ctrlp.vim'
 
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+  Plug 'tpope/vim-surround'
+  Plug 'vim-scripts/autoload_cscope.vim'
+  Plug 'mileszs/ack.vim'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-dispatch'
 
-    Bundle 'gmarik/vundle'
+  " Git
+  Plug 'tpope/vim-fugitive'
 
-    Bundle 'c.vim'
-    Bundle 'mib_translator'
-"    Bundle 'The-NERD-tree'
-    Bundle 'Tagbar'
-    Bundle 'ctrlp.vim'
-    Bundle 'tpope/vim-fugitive'
-    Bundle 'guns/vim-clojure-static'
-    Bundle 'tpope/vim-fireplace'
-    Bundle 'jimenezrick/vimerl'
-    Bundle 'vim-scripts/autoload_cscope.vim'
-    Bundle 'mileszs/ack.vim'
-    Bundle 'vim-ruby/vim-ruby'
-    Bundle 'elixir-lang/vim-elixir'
-"    Bundle 'taglist.vim'
+  " clojure related
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-static'
 
-    filetype plugin indent on
-  else
-    filetype on
-    filetype plugin on
-    filetype indent on
-  endif
-else
-  :finish
-endif
-" }}}
-" }}}
-"
+  " ruby related
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/vim-rails'
+  Plug 'ngmy/vim-rubocop'
+  Plug 'thoughtbot/vim-rspec'
+  Plug 'tpope/vim-haml'
+
+  " erlang related
+  Plug 'elixir-lang/vim-elixir'
+  Plug 'jimenezrick/vimerl'
+
+  "Qfdo s/x/y/gce in quickfix
+  Plug 'karlbright/qfdo.vim'
+  Plug 'scrooloose/syntastic'
+call plug#end()
+
+
 set ofu=syntaxcomplete#Complete
 
 " General Settings {{{
@@ -54,6 +54,7 @@ set ruler
 set showcmd
 set showmatch
 set showmode
+set autowrite
 
 "Switch buffer without save
 set hidden
@@ -83,24 +84,17 @@ map <F2> :source $VIMRUNTIME/syntax/
 map <F9> :if has("syntax_items")<CR>syntax off<CR>else<CR>syntax on<CR>endif<CR><CR>
 
 "Vim 7 specific mappings
-if version >= 700
-  map <C-t> <Esc>:tabnew<CR>
-  map <C-F4> <Esc>:tabclose<CR> 
-  map <C-a> <Esc>ggVG 
-endif
+map <C-t> <Esc>:tabnew<CR>
+map <C-F4> <Esc>:tabclose<CR> 
+map <C-a> <Esc>ggVG 
 
-"Windows like mappings
-if has("win32")
-  "Ctrl+A = Select All
-  map <C-a> <Esc>ggVG 
-  "Ctrl+tab = Fwd Cycle across splits
-  map <C-Tab> <Esc><C-w>w
-  "Ctrl+Shift+tab = Reverse Cycle across splits
-  map <C-S-Tab> <Esc><C-w>W
-endif
+"Ctrl+tab = Fwd Cycle across splits
+map <C-Tab> <Esc><C-w>w
+"Ctrl+Shift+tab = Reverse Cycle across splits
+map <C-S-Tab> <Esc><C-w>W
 
 " set swap directory
-set dir=~/Temp/swap
+set dir=~/temp/vim
 " show status line
 set ls=2
 "Make no *.bak
@@ -116,37 +110,6 @@ set hlsearch
 "set verbose=9
 
 "General Options ends }}}
-
-"Java settings {{{
-let java_highlight_functions=1
-
-if has("autocmd")
-  autocmd BufRead,BufNewFile *.java set makeprg=javac\ %
-  "autocmd BufRead BufNewFile *.java set makeprg=ant\ -emacs
-
-  " Mark Klips as XML files (17/2/2005)
-  autocmd BufRead,BufNewFile *.klip set filetype=xml
-
-  " Mark Mycroft Source as XML files (17/2/2005)
-  autocmd BufRead,BufNewFile *.src set filetype=xml
-
-  " Reload settings file everytime its written 
-  autocmd! bufwritepost _vimrc source $VIM/_vimrc
-
-  " Shameless stolen from vimrc_example. I like this!
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-  
-  " Audo enter the directory
-  au BufEnter * execute ":silent! lcd " . expand("%:p:h")
-endif
-"Java Settings End }}}
 
 "My color settings {{{
 "
@@ -206,15 +169,8 @@ if has("gui")
   set mousemodel=extend
 endif
 
-" Custom Commands
-command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-    \ | wincmd p | diffthis
-
 "highlight current line
 set cursorline
-":hi CursorLine term=none cterm=none ctermbg=3
-":autocmd InsertLeave * hi CursorLine term=none cterm=none ctermbg=3
-":autocmd InsertEnter * hi CursorLine term=none cterm=none ctermbg=4
 
 nmap <F3> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
 :nnoremap <F5> :buffers<CR>:buffer<Space>
@@ -239,4 +195,23 @@ set updatetime=1000
 nmap ,t :!(cd %:p:h;ctags *)& "Maps the updates of tags to key ,t.
 set tags=tags; "The ';'  at the end will cause ctags to search for current dir 
                " and above dirs until it find a tag file.
-autocmd BufferWritePost *.erl :silent !(cd %:p:h;ctags *)&
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" setting for plugin syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_checkers = ['rubocop']
