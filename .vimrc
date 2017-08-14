@@ -18,6 +18,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'mileszs/ack.vim'
   Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-dispatch'
+  Plug 'fholgado/minibufexpl.vim'
+  Plug 'powerline/powerline'
+  Plug 'ervandew/supertab'
+  Plug 'bronson/vim-trailing-whitespace'
+
+  " JSON
+  Plug 'elzr/vim-json'
 
   " Git
   Plug 'tpope/vim-fugitive'
@@ -25,6 +32,8 @@ call plug#begin('~/.vim/plugged')
   " clojure related
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'
+  Plug 'vim-scripts/paredit.vim'
+  Plug 'kien/rainbow_parentheses.vim'
 
   " ruby related
   Plug 'vim-ruby/vim-ruby'
@@ -41,7 +50,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'karlbright/qfdo.vim'
   Plug 'scrooloose/syntastic'
 call plug#end()
-
 
 set ofu=syntaxcomplete#Complete
 
