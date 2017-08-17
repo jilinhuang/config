@@ -25,6 +25,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'rking/ag.vim'
 
+  Plug 'scrooloose/syntastic'
+  Plug 'sheerun/vim-polyglot'
+
   " JSON
   Plug 'elzr/vim-json'
 
@@ -48,9 +51,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'elixir-lang/vim-elixir'
   Plug 'jimenezrick/vimerl'
 
+  " html
+  Plug 'mattn/emmet-vim'
+
   "Qfdo s/x/y/gce in quickfix
   Plug 'karlbright/qfdo.vim'
-  Plug 'scrooloose/syntastic'
 call plug#end()
 
 set ofu=syntaxcomplete#Complete
